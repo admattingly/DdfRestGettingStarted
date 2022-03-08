@@ -56,7 +56,7 @@ Use the cURL command in UNIX to attempt to list the available services from DDF.
 
 In the example below, DDF is listening on port `5035` at IP address `192.168.0.61`. 
 
-<pre>$ </pre><pre><code><b>curl -s -u ADCDA:****** -H "Accept: application/json" http://192.168.0.61:5035/services</b></code></pre>
+<pre><code><b>curl -s -u ADCDA:****** -H "Accept: application/json" http://192.168.0.61:5035/services</b></code></pre>
 <pre>{
   "DB2Services":[
     {
@@ -75,4 +75,11 @@ In the example below, DDF is listening on port `5035` at IP address `192.168.0.6
     }
   ]}</pre>
 
-  Note that the example above has been _formatted_ by hand so the JSON response is more legible – cURL displays the response as a continuous character stream without any formatting.
+Note that the example above has been _formatted_ by hand so the JSON response is more legible – cURL displays the response as a continuous character stream without any formatting.
+
+Use the <pre>-u <i>user</i>:<i>password</i></pre> option of the cURL command to pass the credentials of a valid z/OS user to DDF. The “-s” option asks cURL not to produce a progress bar.
+
+In this example, SSL is not being used, but if you have SSL configured for DDF, then it is highly desirable to use SSL for access to DDF RESTful services.
+
+For guidance on setting up SSL (strictly, AT-TLS) for DDF, consult the following Redpaper:
+http://www.redbooks.ibm.com/redpieces/abstracts/redp4799.html?Open
