@@ -10,8 +10,8 @@ A complete description of the process for configuring DDF and managing RESTful s
 http://www.ibm.com/support/knowledgecenter/SSEPEK_11.0.0/restserv/src/tpc/db2z_restservices.html
 ## Step-by-step
 ### 1. Prepare DDF to receive RESTful services
-After you install DB2 V12 or install APAR PI66828 on DB2 V11, you must customise and submit DB2 installation job, DSNTIJRS.
+After you install DB2 V12 or install APAR `PI66828` on DB2 V11, you must customise and submit DB2 installation job, `DSNTIJRS`.
 
-This job creates the table, SYSIBM.DSNSERVICE, which holds the RESTful services that DDF will provide.
+This job creates the table, `SYSIBM.DSNSERVICE`, which holds the RESTful services that DDF will provide.
 
 Once this job executes successfully, stop and restart DDF.  **Note that this action will disconnect any applications which access your DB2 subsystem via DDF.**
