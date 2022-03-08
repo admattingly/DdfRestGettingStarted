@@ -15,3 +15,30 @@ After you install DB2 V12 or install APAR `PI66828` on DB2 V11, you must customi
 This job creates the table, `SYSIBM.DSNSERVICE`, which holds the RESTful services that DDF will provide.
 
 Once this job executes successfully, stop and restart DDF.  **Note that this action will disconnect any applications which access your DB2 subsystem via DDF.**
+
+For example, for a DB2 subsystem with command prefix, -DBBG, we issue MVS operator commands:
+
+```**-DBBG STOP DDF** 
+DSNL021I -DBBG STOP DDF COMMAND ACCEPTED
+DSNL005I -DBBG DDF IS STOPPING 
+DSNL006I -DBBG DDF STOP COMPLETE 
+**-DBBG START DDF** 
+DSNL021I -DBBG START DDF COMMAND ACCEPTED 
+DSNL003I -DBBG DDF IS STARTING 
+DSNL519I -DBBG DSNLILNR TCP/IP SERVICES AVAILABLE 474 
+ FOR DOMAIN S0W1.DAL-EBIS.IHOST.COM AND PORT 5035
+DSNL004I -DBBG DDF START COMPLETE 475 
+ LOCATION DALLASB 
+ LU NETD.DBBGLU1 
+ GENERICLU -NONE 
+ DOMAIN S0W1.DAL-EBIS.IHOST.COM 
+ TCPPORT 5035 
+ SECPORT 5037 
+ RESPORT 5036 
+ IPNAME -NONE 
+ OPTIONS: 
+ PKGREL = COMMIT 
+DSNL519I -DBBG DSNLIRSY TCP/IP SERVICES AVAILABLE 476 
+ FOR DOMAIN S0W1.DAL-EBIS.IHOST.COM AND PORT 5036```
+
+ 
