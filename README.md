@@ -93,10 +93,11 @@ Define a `getEmployee` service to return the results of the following SQL query:
 
 To do this we invoke the `DB2ServiceManager` service (shown in the previous step), as follows:
 
-<pre><b><code>curl -s -X POST -u ADCDA:******** -H "Accept: application/json" -H "Content-Type: application/json" --data "{\"requestType\": \"createService\", \"sqlStmt\": \"SELECT * FROM DSN8B10.EMP WHERE EMPNO = :EMPLOYEE_CODE\", \"collectionID\": \"MYCOLL\", \"serviceName\": \"getEmployee\", \"description\": \"Get employee by EMPNO\"}" http://192.168.0.61:5035/services/DB2ServiceManager</code></b></pre>
-```
-{
+<pre><code><b>curl -s -X POST -u ADCDA:******** -H "Accept: application/json" -H "Content-Type: application/json" --data "{\"requestType\": \"createService\", \"sqlStmt\": \"SELECT * FROM DSN8B10.EMP WHERE EMPNO = :EMPLOYEE_CODE\", \"collectionID\": \"MYCOLL\", \"serviceName\": \"getEmployee\", \"description\": \"Get employee by EMPNO\"}" http://192.168.0.61:5035/services/DB2ServiceManager</b></code></pre>
+<pre>{
   "StatusCode":201,
   "StatusDescription":"DB2 Rest Service getEmployee was created successfully.",
   "URL":"http:&#92;/&#92;/192.168.0.61:5035&#92;/services&#92;/MYCOLL&#92;/getEmployee"
-}```
+}</pre>
+
+Note that the user creating this service requires `BINDADD` privilege and `CREATE IN` privilege for the collection specified in the above command (`MYCOLL` in the above example).  This is because DDF is creating a new package for our service, called `location.MYCOLL.getEmployee`, in this case.
