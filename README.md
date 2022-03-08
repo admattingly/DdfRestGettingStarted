@@ -77,9 +77,26 @@ In the example below, DDF is listening on port `5035` at IP address `192.168.0.6
 
 Note that the example above has been _formatted_ by hand so the JSON response is more legible – cURL displays the response as a continuous character stream without any formatting.
 
-Use the <pre>-u <i>user</i>:<i>password</i></pre> option of the cURL command to pass the credentials of a valid z/OS user to DDF. The “-s” option asks cURL not to produce a progress bar.
+Use the `-u user:password` option of the cURL command to pass the credentials of a valid z/OS user to DDF. The `-s` option asks cURL not to produce a progress bar.
 
-In this example, SSL is not being used, but if you have SSL configured for DDF, then it is highly desirable to use SSL for access to DDF RESTful services.
+**In this example, SSL is not being used, but if you have SSL configured for DDF, then it is highly desirable to use SSL for access to DDF RESTful services.**
 
 For guidance on setting up SSL (strictly, AT-TLS) for DDF, consult the following Redpaper:
 http://www.redbooks.ibm.com/redpieces/abstracts/redp4799.html?Open
+
+### 4. Create a RESTful service
+In this example, we will use the sample table, `DSN8B10.EMP`, but feel free to use any existing table in your DB2 subsystem.
+
+Define a `getEmployee` service to return the results of the following SQL query:
+
+`SELECT * FROM DSN8B10.EMP WHERE EMPNO = :EMPLOYEE_CODE`
+
+To do this we invoke the `DB2ServiceManager` service (shown in the previous step), as follows:
+
+<pre><b><code>curl -s -X POST -u ADCDA:******** -H "Accept: application/json" -H "Content-Type: application/json" --data "{\"requestType\": \"createService\", \"sqlStmt\": \"SELECT * FROM DSN8B10.EMP WHERE EMPNO = :EMPLOYEE_CODE\", \"collectionID\": \"MYCOLL\", \"serviceName\": \"getEmployee\", \"description\": \"Get employee by EMPNO\"}" http://192.168.0.61:5035/services/DB2ServiceManager</code></b></pre>
+```
+{
+  "StatusCode":201,
+  "StatusDescription":"DB2 Rest Service getEmployee was created successfully.",
+  "URL":"http:&#92;/&#92;/192.168.0.61:5035&#92;/services&#92;/MYCOLL&#92;/getEmployee"
+}```
