@@ -101,3 +101,242 @@ To do this we invoke the `DB2ServiceManager` service (shown in the previous step
 }</pre>
 
 Note that the user creating this service requires `BINDADD` privilege and `CREATE IN` privilege for the collection specified in the above command (`MYCOLL` in the above example).  This is because DDF is creating a new package for our service, called `location.MYCOLL.getEmployee`, in this case.
+
+### 5. Execute the RESTful service
+
+Now we can test our service, by invoking it using cURL, as follows:
+
+<pre><code><b>curl -s -X POST -u ADCDA:******** -H "Accept: application/json" -H "Content-Type: application/json" --data "{\"EMPLOYEE_CODE\": \"000010\"}" http://192.168.0.61:5035/services/MYCOLL/getEmployee</b></code></pre>
+<pre>{
+  "ResultSet Output":[
+    {
+      "EMPNO":"000010",
+      "FIRSTNME":"CHRISTINE",
+      "MIDINIT":"I",
+      "LASTNAME":"HAAS",
+      "WORKDEPT":"A00",
+      "PHONENO":"3978",
+      "HIREDATE":"1965-01-01",
+      "JOB":"PRES ",
+      "EDLEVEL":18,
+      "SEX":"F",
+      "BIRTHDATE":"1933-08-14",
+      "SALARY":52750.00,
+      "BONUS":1000.00,
+      "COMM":4220.00
+    }
+  ],
+  "StatusCode":200,
+  "StatusDescription":"Execution Successful"
+}</pre>
+
+Again, the above output has been formatted by hand for clarity.
+
+To allow other users to access this service, you need to grant `EXECUTE` authority to the underlying package that DDF created.  For example, execute the DB2 statement below to give user `ADCDB` access to the package:
+
+<pre><code><b>GRANT EXECUTE ON PACKAGE MYCOLL.getEmployee TO ADCDB</b></code></pre>
+
+### 6. (Optional) Discover your service
+You, or others, can discover how to invoke your service, and what output to expect from it, by invoking the service using a HTTP `GET` request with no parameters.
+
+Issue the following cURL command to discover how to invoke your service:
+
+<pre><code><b>curl -s -u ADCDA:******** -H "Accept: application/json" http://192.168.0.61:5035/services/MYCOLL/getEmployee</b></code></pre>
+<pre>{
+  "getEmployee":{
+    "serviceName":"getEmployee",
+    "serviceCollectionID":"MYCOLL",
+    "serviceProvider":"db2service-1.0",
+    "serviceDescription":"Get employee by EMPNO",
+    "serviceURL":"http:\/\/192.168.0.61:5035\/services\/MYCOLL\/getEmployee",
+    "serviceStatus":"started",
+    "RequestSchema":{
+      "$schema":"http:\/\/json-schema.org\/draft-04\/schema#",
+      "type":"object",
+      "properties":{
+        "EMPLOYEE_CODE":{
+          "type":[
+            "null",
+            "string"
+          ],
+          "maxLength":6,
+          "description":"Nullable CHAR(6)"
+        }
+      },
+      "required":[
+        "EMPLOYEE_CODE"
+      ],
+      "description":"Service getEmployee invocation HTTP request body"
+    },
+    "ResponseSchema":{
+      "$schema":"http:\/\/json-schema.org\/draft-04\/schema#",
+      "type":"object",
+      "properties":{
+        "ResultSet Output":{
+          "type":"array",
+          "items":{
+            "type":"object",
+            "properties":{
+              "EMPNO":{
+                "type":"string",
+                "maxLength":6,
+                "description":"CHAR(6)"
+              },
+              "FIRSTNME":{
+                "type":"string",
+                "maxLength":12,
+                "description":"VARCHAR(12)"
+              },
+              "MIDINIT":{
+                "type":"string",
+                "maxLength":1,
+                "description":"CHAR(1)"
+              },
+              "LASTNAME":{
+                "type":"string",
+                "maxLength":15,
+                "description":"VARCHAR(15)"
+              },
+              "WORKDEPT":{
+                "type":[
+                  "null",
+                  "string"
+                ],
+                "maxLength":3,
+                "description":"Nullable CHAR(3)"
+              },
+              "PHONENO":{
+                "type":[
+                  "null",
+                  "string"
+                ],
+                "maxLength":4,
+                "description":"Nullable CHAR(4)"
+              },
+              "HIREDATE":{
+                "type":[
+                  "null",
+                  "string"
+                ],
+                "minLength":8,
+                "maxLength":10,
+                "pattern":"^(?![0]{4})([0-9]{4})-(0?[1-9]|1[0-2])-(0?[1-9]|[1-2][0-9]|3[0-1])$",
+                "description":"Nullable DATE yyyy-[m]m-[d]d"
+              },
+              "JOB":{
+                "type":[
+                  "null",
+                  "string"
+                ],
+                "maxLength":8,
+                "description":"Nullable CHAR(8)"
+              },
+              "EDLEVEL":{
+                "type":[
+                  "null",
+                  "integer"
+                ],
+                "multipleOf":1,
+                "minimum":-32768,
+                "maximum":32767,
+                "description":"Nullable SMALLINT"
+              },
+              "SEX":{
+                "type":[
+                  "null",
+                  "string"
+                ],
+                "maxLength":1,
+                "description":"Nullable CHAR(1)"
+              },
+              "BIRTHDATE":{
+                "type":[
+                  "null",
+                  "string"
+                ],
+                "minLength":8,
+                "maxLength":10,
+                "pattern":"^(?![0]{4})([0-9]{4})-(0?[1-9]|1[0-2])-(0?[1-9]|[1-2][0-9]|3[0-1])$",
+                "description":"Nullable DATE yyyy-[m]m-[d]d"
+              },
+              "SALARY":{
+                "type":[
+                  "null",
+                  "number"
+                ],
+                "multipleOf":0.01,
+                "minimum":-999999.99,
+                "maximum":999999.99,
+                "description":"Nullable DECIMAL(9,2)"
+              },
+              "BONUS":{
+                "type":[
+                  "null",
+                  "number"
+                ],
+                "multipleOf":0.01,
+                "minimum":-999999.99,
+                "maximum":999999.99,
+                "description":"Nullable DECIMAL(9,2)"
+              },
+              "COMM":{
+                "type":[
+                  "null",
+                  "number"
+                ],
+                "multipleOf":0.01,
+                "minimum":-999999.99,
+                "maximum":999999.99,
+                "description":"Nullable DECIMAL(9,2)"
+              }
+            },
+            "required":[
+              "EMPNO",
+              "FIRSTNME",
+              "MIDINIT",
+              "LASTNAME",
+              "WORKDEPT",
+              "PHONENO",
+              "HIREDATE",
+              "JOB",
+              "EDLEVEL",
+              "SEX",
+              "BIRTHDATE",
+              "SALARY",
+              "BONUS",
+              "COMM"
+            ],
+            "description":"ResultSet Row"
+          }
+        },
+        "StatusDescription":{
+          "type":"string",
+          "description":"Service invocation status description"
+        },
+        "StatusCode":{
+          "type":"integer",
+          "multipleOf":1,
+          "minimum":100,
+          "maximum":600,
+          "description":"Service invocation HTTP status code"
+        }
+      },
+      "required":[
+        "StatusDescription",
+        "StatusCode",
+        "ResultSet Output"
+      ],
+      "description":"Service getEmployee invocation HTTP response body"
+    }
+  }
+}</pre>
+
+### 7. (Optional) Delete your service
+
+To remove your service from DDF, issue the following cURL command:
+
+<pre><code><b>curl -s -X POST -u ADCDA:******** -H "Accept: application/json" -H "Content-Type: application/json" --data "{\"requestType\": \"dropService\", \"collectionID\": \"MYCOLL\", \"serviceName\": \"getEmployee\"}" http://192.168.0.61:5035/services/DB2ServiceManager</b></code></pre>
+<pre>{
+  "StatusCode":200,
+  "StatusDescription":"DB2 Rest Service getEmployee was dropped successfully."
+}</pre>
