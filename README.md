@@ -97,7 +97,7 @@ To do this we invoke the `DB2ServiceManager` service (shown in the previous step
 <pre>{
   "StatusCode":201,
   "StatusDescription":"DB2 Rest Service getEmployee was created successfully.",
-  "URL":"http:&#92;/&#92;/192.168.0.61:5035&#92;/services&#92;/MYCOLL&#92;/getEmployee"
+  "URL":"http:\/\/192.168.0.61:5035\/services\/MYCOLL\/getEmployee"
 }</pre>
 
 Note that the user creating this service requires `BINDADD` privilege and `CREATE IN` privilege for the collection specified in the above command (`MYCOLL` in the above example).  This is because DDF is creating a new package for our service, called `location.MYCOLL.getEmployee`, in this case.
