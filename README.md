@@ -7,4 +7,4 @@ This recipe walks you through a minimal configuration of the Distributed Data Fa
 - Access to any UNIX environment with the "cURL" command installed (doesn't have to be z/OS UNIX)
 
 A complete description of the process for configuring DDF and managing RESTful services can be found in the DB2 Knowledge Center:
-(http://www.ibm.com/support/knowledgecenter/SSEPEK_11.0.0/restserv/src/tpc/db2z_restservices.html)
+http://www.ibm.com/support/knowledgecenter/SSEPEK_11.0.0/restserv/src/tpc/db2z_restservices.html
