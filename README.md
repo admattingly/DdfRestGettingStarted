@@ -18,12 +18,11 @@ Once this job executes successfully, stop and restart DDF.  **Note that this act
 
 For example, for a DB2 subsystem with command prefix, -DBBG, we issue MVS operator commands:
 
-**`-DBBG STOP DDF`** 
-```
+<pre><b>-DBBG STOP DDF</b> 
 DSNL021I -DBBG STOP DDF COMMAND ACCEPTED
 DSNL005I -DBBG DDF IS STOPPING 
 DSNL006I -DBBG DDF STOP COMPLETE 
--DBBG START DDF 
+<b>-DBBG START DDF</b> 
 DSNL021I -DBBG START DDF COMMAND ACCEPTED 
 DSNL003I -DBBG DDF IS STARTING 
 DSNL519I -DBBG DSNLILNR TCP/IP SERVICES AVAILABLE 474 
@@ -40,6 +39,9 @@ DSNL004I -DBBG DDF START COMPLETE 475
  OPTIONS: 
  PKGREL = COMMIT 
 DSNL519I -DBBG DSNLIRSY TCP/IP SERVICES AVAILABLE 476 
- FOR DOMAIN S0W1.DAL-EBIS.IHOST.COM AND PORT 5036
- ```
+ FOR DOMAIN S0W1.DAL-EBIS.IHOST.COM AND PORT 5036</pre>
+
+### 2. Authorise users to access DDF RESTful services
+DDF will test access to profile <subsys>.REST in the DSNR class to determine whether a user can invoke RESTful services.  So, to permit users to access these services, permit READ access to this profile through your SAF security provider.
+
 
