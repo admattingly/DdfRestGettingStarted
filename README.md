@@ -42,6 +42,11 @@ DSNL519I -DBBG DSNLIRSY TCP/IP SERVICES AVAILABLE 476
  FOR DOMAIN S0W1.DAL-EBIS.IHOST.COM AND PORT 5036</pre>
 
 ### 2. Authorise users to access DDF RESTful services
-DDF will test access to profile <subsys>.REST in the DSNR class to determine whether a user can invoke RESTful services.  So, to permit users to access these services, permit READ access to this profile through your SAF security provider.
+DDF will test access to profile _subsys_.REST in the DSNR class to determine whether a user can invoke RESTful services.  So, to permit users to access these services, permit READ access to this profile through your SAF security provider.
 
+As a RACF example, to assign IBMUSER as the profile owner and permit access to users ADCDA and ADCDB to RESTful services provided by DB2 subsystem DBBG, you would issue the following TSO commands:
 
+<pre><b>RDEFINE DSNR DBBG.REST OWNER(IBMUSER) UACC(NONE)
+PERMIT DBBG.REST CLASS(DSNR) ID(ADCDA) ACCESS(READ)
+PERMIT DBBG.REST CLASS(DSNR) ID(ADCDB) ACCESS(READ)
+SETROPTS RACLIST(DSNR) REFRESH</b></pre>
