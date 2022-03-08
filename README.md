@@ -50,3 +50,29 @@ As a RACF example, to assign IBMUSER as the profile owner and permit access to u
 PERMIT DBBG.REST CLASS(DSNR) ID(ADCDA) ACCESS(READ)
 PERMIT DBBG.REST CLASS(DSNR) ID(ADCDB) ACCESS(READ)
 SETROPTS RACLIST(DSNR) REFRESH</b></pre>
+
+### 3. Test access to DDF restful services
+Use the cURL command in UNIX to attempt to list the available services from DDF.
+
+In the example below, DDF is listening on port `5035` at IP address `192.168.0.61`. 
+
+<pre>$ <b>curl -s -u ADCDA:****** -H "Accept: application/json" http://192.168.0.61:5035/services</b>
+{
+  "DB2Services":[
+    {
+      "ServiceName":"DB2ServiceDiscover",
+      "ServiceCollectionID":null,
+      "ServiceDescription":"DB2 service to list all available services.",
+      "ServiceProvider":"db2service-1.0",
+      "ServiceURL":"http:&#92;/&#92;/192.168.0.61:5035&#92;/services&#92;/DB2ServiceDiscover"
+    },
+    {
+      "ServiceName":"DB2ServiceManager",
+      "ServiceCollectionID":null,
+      "ServiceDescription":"DB2 service to create, drop, or alter a user defined service.",
+      "ServiceProvider":"db2service-1.0",
+      "ServiceURL":"http:&#92;/&#92;/192.168.0.61:5035&#92;/services&#92;/DB2ServiceManager"
+    }
+  ]}</pre>
+
+  Note that the example above has been _formatted_ by hand so the JSON response is more legible – cURL displays the response as a continuous character stream without any formatting.
