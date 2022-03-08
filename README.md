@@ -56,7 +56,7 @@ Use the cURL command in UNIX to attempt to list the available services from DDF.
 
 In the example below, DDF is listening on port `5035` at IP address `192.168.0.61`. 
 
-<pre>$ <b>curl -s -u ADCDA:****** -H "Accept: application/json" http://192.168.0.61:5035/services</b>
+<pre>$ <code><b>curl -s -u ADCDA:****** -H "Accept: application/json" http://192.168.0.61:5035/services</b></code>
 {
   "DB2Services":[
     {
