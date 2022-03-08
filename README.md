@@ -5,5 +5,6 @@ This recipe walks you through a minimal configuration of the Distributed Data Fa
 ## Ingredients
 - DB2 for z/OS version 12, or DB2 for z/OS version 11 with APAR PI66828 (Note: update APAR PI70477 now available)
 - Access to any UNIX environment with the "cURL" command installed (doesn't have to be z/OS UNIX)
+
 A complete description of the process for configuring DDF and managing RESTful services can be found in the DB2 Knowledge Center:
 (http://www.ibm.com/support/knowledgecenter/SSEPEK_11.0.0/restserv/src/tpc/db2z_restservices.html)
